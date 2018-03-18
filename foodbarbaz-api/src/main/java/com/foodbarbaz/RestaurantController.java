@@ -28,6 +28,8 @@ public class RestaurantController {
 	@RequestMapping("/myRestaurants/{postalCode}")
 	public List<Restaurant> displayRestaurants(@PathVariable String postalCode){
 		RestTemplate restTemplate = new RestTemplate();
+		lat = null;
+		lng = null;
 		
 		getGeo(postalCode); // gets the lat and lng;
 		
