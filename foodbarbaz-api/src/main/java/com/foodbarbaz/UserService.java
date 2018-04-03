@@ -18,7 +18,7 @@ public class UserService {
 	//Get all users from the database - WORKS
 	public List<FBBUser> getAllUsers(){
 		List<FBBUser> users = new ArrayList<>();
-		((CrudRepository<FBBUser, String>) userRepository).findAll().forEach(users::add);
+		users = (List<FBBUser>) ((CrudRepository<FBBUser, String>) userRepository).findAll();
 		
 		return users;
 	}
@@ -31,7 +31,7 @@ public class UserService {
 	//Get one user and return it
 	public FBBUser getUser(LoginHolder loginHolder) {
 		List<FBBUser> users = new ArrayList<>();
-		((CrudRepository<FBBUser, String>) userRepository).findAll().forEach(users::add);
+		users = (List<FBBUser>) ((CrudRepository<FBBUser, String>) userRepository).findAll();
 		
 		for (FBBUser fbbUser : users) {
 			System.out.println("Username: " + fbbUser.getUsername() + " Password: " + fbbUser.getPassword());
