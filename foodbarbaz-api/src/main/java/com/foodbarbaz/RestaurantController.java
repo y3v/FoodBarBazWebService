@@ -98,15 +98,15 @@ public class RestaurantController {
 		return restaurants;
 	}
 	
-	@RequestMapping("/myGeoCode")
-	public String displayGeoCode(){
+	@RequestMapping("/myGeoCode/{search}")
+	public Location displayGeoCode(@PathVariable String search){
 		RestTemplate restTemplate = new RestTemplate();
-		GeoResult geoResult = restTemplate.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address=H3C+0e9&key=AIzaSyDr6r5KdOVFsxussTsOkElvahvers4SDdo", GeoResult.class);
+		GeoResult geoResult = restTemplate.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address="+ search +"&key=AIzaSyDr6r5KdOVFsxussTsOkElvahvers4SDdo", GeoResult.class);
 		
 		System.out.println("Latitude: " + geoResult.getResults().get(0).getGeometry().getLocation().getLat());
 		System.out.println("Longitude: " + geoResult.getResults().get(0).getGeometry().getLocation().getLng());
 
-		return geoResult.toString();
+		return geoResult.getResults().get(0).getGeometry().getLocation();
 	}
 	
 	private void getGeo(String postalCode) {
