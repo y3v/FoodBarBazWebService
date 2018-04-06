@@ -1,8 +1,13 @@
 package com.foodbarbaz;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,6 +22,13 @@ public class FBBUser {
 	private String firstname;
 	private String lastname;
 	private String email;
+	
+	 @OneToMany(fetch = FetchType.EAGER, mappedBy = "requester")
+	 private Set<Friendship> friendRequests = new HashSet<>();
+
+	 @OneToMany(fetch = FetchType.EAGER, mappedBy = "friend")
+	 private Set<Friendship> friends = new HashSet<>();
+	
 	
 	public FBBUser(long id, String username, String password, String firstname, String lastname,
 			String email) {
@@ -77,6 +89,22 @@ public class FBBUser {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<Friendship> getFriendRequests() {
+		return friendRequests;
+	}
+
+	public void setFriendRequests(Set<Friendship> friendRequests) {
+		this.friendRequests = friendRequests;
+	}
+
+	public Set<Friendship> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<Friendship> friends) {
+		this.friends = friends;
 	}
 	
 	

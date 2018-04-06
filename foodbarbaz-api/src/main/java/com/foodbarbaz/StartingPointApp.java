@@ -11,7 +11,6 @@ public class StartingPointApp extends SpringBootServletInitializer {
 	
 	//creates the servlet container and everything -- amazing
 	public static void main(String[] args) {
-		
 		SpringApplication.run(StartingPointApp.class , args);
 	}
 	
@@ -19,7 +18,4 @@ public class StartingPointApp extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(StartingPointApp.class);
 	}
-
-	
-
 }
