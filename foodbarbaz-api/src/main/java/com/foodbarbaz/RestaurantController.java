@@ -98,6 +98,80 @@ public class RestaurantController {
 		return restaurants;
 	}
 	
+	@RequestMapping("/myRestaurantsAuto/{latlon:.+}")
+	public List<Restaurant> displayRestaurantsAuto(@PathVariable String latlon){
+		RestTemplate restTemplate = new RestTemplate();
+		if (latlon == null) 
+			return Arrays.asList(new Restaurant("N/A","N/A","N/A","N/A","N/A","N/A"));
+		
+		System.out.println(latlon);
+		String[] latslons = latlon.split(":");
+		String lats,lons;
+		
+		lats = latslons[0];
+		lons = latslons[1];
+		System.out.println(lats + "," + lons);
+		
+		System.out.println(URL_START + lats + "," + lons + URL_AFTER + API_KEY);
+		RestaurantsFullJSON restFullList = restTemplate.getForObject(URL_START + lats + "," + lons + URL_AFTER + API_KEY, RestaurantsFullJSON.class);
+		List<Restaurant> restaurants = new ArrayList<Restaurant>();
+		
+		nextPageToken = restFullList.getNextPageToken(); // to use to get next page of results; not sure how yet
+		
+		System.out.println("LIST SIZE: " + restFullList.getResults().size() + "!");
+		
+		for (int i = 0; i < restFullList.getResults().size(); i++) {
+			String photoRef;
+			String photoURL;
+			String address;
+			String name;
+			String rating;
+			String priceLevel;
+			String placeID;
+			
+			//System.out.println("-------------------------------");
+			if(restFullList.getResults().get(i).getPhotos() != null) { // not every result has a photo
+				photoRef = restFullList.getResults().get(i).getPhotos().get(0).getPhotoReference();
+				photoURL = URL_GOOGLE_PHOTO + photoRef + "&key=" + API_KEY;
+				//System.out.println(photoURL);
+			}
+			else {
+				photoURL = "N/A";
+			}
+			
+			/*System.out.println(restFullList.getResults().get(i).getVicinity());
+			System.out.println(restFullList.getResults().get(i).getName());
+			System.out.println(restFullList.getResults().get(i).getPriceLevel());
+			System.out.println(restFullList.getResults().get(i).getRating());
+			System.out.println(restFullList.getResults().get(i).getPlaceId());*/
+			
+			
+			address = restFullList.getResults().get(i).getVicinity();
+			name = restFullList.getResults().get(i).getName();
+			
+			if (restFullList.getResults().get(i).getRating() != null) {
+				rating = restFullList.getResults().get(i).getRating().toString();
+			}
+			else {
+				rating = "N/A";
+			}
+			
+			if (restFullList.getResults().get(i).getPriceLevel() != null) {
+				priceLevel = restFullList.getResults().get(i).getPriceLevel().toString();
+			}
+			else {
+				priceLevel = "N/A";
+			}
+			
+			placeID = restFullList.getResults().get(i).getPlaceId();
+			
+			restaurants.add(new Restaurant(name,placeID,address,photoURL,priceLevel,rating));
+			
+		}
+		
+		return restaurants;
+	}
+	
 	@RequestMapping("/myGeoCode/{search}")
 	public String displayGeoCode(@PathVariable String search){
 		RestTemplate restTemplate = new RestTemplate();
