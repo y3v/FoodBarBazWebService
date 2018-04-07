@@ -1,10 +1,15 @@
 package com.foodbarbaz;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
-public interface UserRepository extends CrudRepository<FBBUser, String> {
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+public interface UserRepository extends CrudRepository<FBBUser, Long> {
 	
 	
+	List<FBBUser> findAllByIdNotLike(@Param("id") Long id);
 	
 }
 
