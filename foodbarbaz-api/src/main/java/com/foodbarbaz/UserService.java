@@ -18,6 +18,8 @@ public class UserService {
 	//Connect to the database
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
 	private UserLocationRepository userLocationRepository;
 	/*@Autowired
 	private FriendshipRepository friendshipRepository;*/
