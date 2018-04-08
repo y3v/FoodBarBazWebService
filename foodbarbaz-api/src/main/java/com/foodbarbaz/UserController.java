@@ -56,4 +56,9 @@ public class UserController {
 	public Set<UserLocation> getLastUserLocation(@PathVariable Long userId, @PathVariable int count){
 		return userService.getLastUserLocation(userId, count);
 	}
+	
+	@RequestMapping("/deleteAllUserLocation/{userId}")
+	public void deleteAllUserLocation(@PathVariable long userId) {
+		userService.deleteAllUserLocation(userId);
+	}
 }

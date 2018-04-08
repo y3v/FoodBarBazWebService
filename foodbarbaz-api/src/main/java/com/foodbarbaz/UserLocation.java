@@ -1,5 +1,6 @@
 package com.foodbarbaz;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -15,12 +16,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-// take user as reference
+
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity //mark this class as an entity
 @Table(name = "user_location")
-public class UserLocation {
+public class UserLocation implements Serializable{
 	@Id @GeneratedValue
 	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
@@ -31,15 +34,17 @@ public class UserLocation {
 	
 	@NotNull
     @Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
+	private java.util.Date timestamp;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private FBBUser user;
 	
-	public UserLocation(double latitude, double longitude) {
+	public UserLocation(double latitude, double longitude, java.util.Date timestamp) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.timestamp = timestamp;
 	}
 	
 	public UserLocation() {}
@@ -68,11 +73,11 @@ public class UserLocation {
 		this.longitude = longitude;
 	}
 
-	public Date getTimestamp() {
+	public java.util.Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(java.util.Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

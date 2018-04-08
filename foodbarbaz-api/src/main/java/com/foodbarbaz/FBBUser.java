@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity //mark this class as an entity
@@ -35,7 +36,10 @@ public class FBBUser implements Serializable{
         inverseJoinColumns={@JoinColumn(name="FRIEND2_ID")})
     private Set<FBBUser> friends = new HashSet<FBBUser>();
 	
-	@OneToMany(mappedBy = "user", cascade= CascadeType.ALL)
+
+	@JsonManagedReference
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private Set<UserLocation> userLocations = new HashSet<>();
 	
 	
