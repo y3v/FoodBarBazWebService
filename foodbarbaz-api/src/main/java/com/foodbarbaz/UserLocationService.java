@@ -25,5 +25,9 @@ public class UserLocationService {
 		
 		return locations;
 	}
+	
+	public List<UserLocation> getLastUserLocations(){
+		return ((List<UserLocation>) ((CrudRepository<UserLocation, Long>) userLocationRepository).findAll()).subList(0, 9);
+	}
 
 }

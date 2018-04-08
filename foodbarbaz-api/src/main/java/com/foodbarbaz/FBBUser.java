@@ -35,8 +35,7 @@ public class FBBUser implements Serializable{
         inverseJoinColumns={@JoinColumn(name="FRIEND2_ID")})
     private Set<FBBUser> friends = new HashSet<FBBUser>();
 	
-	@OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user")
     private Set<UserLocation> locationHistory = new HashSet<>();
 	
 	
