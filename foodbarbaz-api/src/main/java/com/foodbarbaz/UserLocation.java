@@ -3,8 +3,11 @@ package com.foodbarbaz;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // take user as reference
@@ -18,6 +21,10 @@ public class UserLocation {
 	private double latitude;
 	private double longitude;
 	private Date timestamp;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", nullable = false)
+    private FBBUser user;
 	
 	public UserLocation(long id, double latitude, double longitude, Date timestamp) {
 		this.id = id;
