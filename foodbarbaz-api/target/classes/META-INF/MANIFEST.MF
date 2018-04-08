@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: Food Bar Baz API
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Yev
+Built-By: olile
 Implementation-Vendor-Id: com.foodbarbaz.webservice
-Build-Jdk: 1.8.0_131
+Build-Jdk: 1.8.0_161
 Implementation-URL: http://projects.spring.io/spring-boot/foodbarbaz-a
  pi/
 Created-By: Maven Integration for Eclipse
