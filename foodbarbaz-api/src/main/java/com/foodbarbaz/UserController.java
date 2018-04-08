@@ -1,6 +1,8 @@
 package com.foodbarbaz;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,11 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
+	@RequestMapping("/getFollowing/{id}")
+	public List<FBBUser> getFollowing(@PathVariable Long id){
+		return userService.getAllFollowing(id);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, value="/register")
 	public void registerUser(@RequestBody FBBUser user){
 		userService.addUser(user);
@@ -30,5 +37,14 @@ public class UserController {
 		return userService.getUser(loginHolder);
 	}
 	
+	@RequestMapping("/addFriendship/{idReq}/{idFriend}")
+	public void addFriendship(@PathVariable Long idReq, @PathVariable Long idFriend){
+		userService.addFriendship(idReq,idFriend);
+	}
+	
+	@RequestMapping("/getFriends/{id}")
+	public Set<FBBUser> getFriends(@PathVariable Long id){
+		return userService.getAllFriends(id);
+	}
 	
 }

@@ -1,31 +1,40 @@
-package com.foodbarbaz;
+/*package com.foodbarbaz;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
-@Entity
-@Table(name = "FRIENDSHIP")
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+//@Entity
+//@Table(name = "FRIENDSHIP")
+//@IdClass(UserId.class)
 public class Friendship implements Serializable {
 
-    /**
+    *//**
 	 * 
-	 */
+	 *//*
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(referencedColumnName = "id")
     FBBUser requester;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(referencedColumnName = "id")
     FBBUser friend;
 
@@ -52,3 +61,10 @@ public class Friendship implements Serializable {
 	}    
 	
 }
+
+
+class UserId implements Serializable{
+	
+    private Long requester; //  name matches the name of FBBUser.requester
+    private Long friend; //  name matches the name of Employee.branch
+}*/

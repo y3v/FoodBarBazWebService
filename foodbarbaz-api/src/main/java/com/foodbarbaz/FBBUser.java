@@ -1,19 +1,25 @@
 package com.foodbarbaz;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity //mark this class as an entity
-public class FBBUser {
+public class FBBUser implements Serializable{
 	
 	@Id @GeneratedValue
 	private long id;
@@ -22,12 +28,12 @@ public class FBBUser {
 	private String firstname;
 	private String lastname;
 	private String email;
-	
-	 @OneToMany(fetch = FetchType.EAGER, mappedBy = "requester")
-	 private Set<Friendship> friendRequests = new HashSet<>();
 
-	 @OneToMany(fetch = FetchType.EAGER, mappedBy = "friend")
-	 private Set<Friendship> friends = new HashSet<>();
+	@ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="EMPLOYEE_COLLEAGUE",
+        joinColumns={@JoinColumn(name="FRIEND1_ID")},
+        inverseJoinColumns={@JoinColumn(name="FRIEND2_ID")})
+    private Set<FBBUser> friends = new HashSet<FBBUser>();
 	
 	
 	public FBBUser(long id, String username, String password, String firstname, String lastname,
@@ -91,19 +97,12 @@ public class FBBUser {
 		this.email = email;
 	}
 
-	public Set<Friendship> getFriendRequests() {
-		return friendRequests;
-	}
 
-	public void setFriendRequests(Set<Friendship> friendRequests) {
-		this.friendRequests = friendRequests;
-	}
-
-	public Set<Friendship> getFriends() {
+	public Set<FBBUser> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(Set<Friendship> friends) {
+	public void setFriends(Set<FBBUser> friends) {
 		this.friends = friends;
 	}
 	
