@@ -103,36 +103,46 @@ public class UserService {
 	}
 
 	public void addUserLocation(Long userId, String location) {
+		FBBUser user = userRepository.findOne(userId);
 		System.out.println("" + userId + ", " + location);
 		if (location == null || location.isEmpty())
 			return;
-
-		FBBUser user = userRepository.findOne(userId);
-		UserLocation userLocation;
-
+		
 		double lat, lon;
 		String[] latlon = location.split(":");
 
 		lat = Double.parseDouble(latlon[0]);
 		lon = Double.parseDouble(latlon[1]);
 
-		userLocation = new UserLocation(lat, lon, new java.util.Date(Calendar.getInstance().getTime().getTime()));
+		UserLocation userLocation = new UserLocation(lat, lon, new java.util.Date(Calendar.getInstance().getTime().getTime()));
 		userLocation.setUser(user);
+		
+		System.out.println("user's location size: " + user.getUserLocations().size());
+		user.getUserLocations().add(userLocation);
 
+		((CrudRepository<FBBUser, Long>) userRepository).save(user);
 		((CrudRepository<UserLocation, Long>) userLocationRepository).save(userLocation);
 	}
 
 	public Set<UserLocation> getLastUserLocation(Long userId, int amount) {
 		Set<UserLocation> locationSet = userRepository.findOne(userId).getUserLocations();
-		UserLocation[] locations = (UserLocation[]) locationSet.toArray();
+		Object[] locations = locationSet.toArray();
 		locationSet.removeAll(locationSet);
 
 		int count = amount > locations.length ? locations.length : amount;
-
-		for (int i = 0; i < count; i++)
-			locationSet.add(locations[i]);
-
+		
+		for (int i = 0; i < count; i++) {
+			locationSet.add((UserLocation)locations[i]);
+			System.out.println(locations[i].toString());
+			System.out.println("locations type " + ((UserLocation)locations[i]).getClass());
+		}
+		System.out.println("locations count " + locations.length);
 		return locationSet;
+	}
+	
+	public void deleteAllUserLocation(Long userId) {
+		FBBUser user = userRepository.findOne(userId);
+		((CrudRepository<UserLocation, Long>) userLocationRepository).delete(user.getUserLocations());
 	}
 
 }
