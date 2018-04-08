@@ -36,7 +36,7 @@ public class FBBUser implements Serializable{
     private Set<FBBUser> friends = new HashSet<FBBUser>();
 	
 	@OneToMany(mappedBy = "user")
-    private Set<UserLocation> locationHistory = new HashSet<>();
+    private Set<UserLocation> userLocations = new HashSet<>();
 	
 	
 	public FBBUser(long id, String username, String password, String firstname, String lastname,
@@ -107,6 +107,14 @@ public class FBBUser implements Serializable{
 
 	public void setFriends(Set<FBBUser> friends) {
 		this.friends = friends;
+	}
+
+	public Set<UserLocation> getUserLocations() {
+		return userLocations;
+	}
+
+	public void setUserLocations(Set<UserLocation> userLocations) {
+		this.userLocations = userLocations;
 	}
 	
 	

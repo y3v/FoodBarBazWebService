@@ -47,4 +47,13 @@ public class UserController {
 		return userService.getAllFriends(id);
 	}
 	
+	@RequestMapping("/addUserLocation/{userId}/{latlon}")
+	public void addUserLocation(@PathVariable long userId, @PathVariable String latlon) {
+		userService.addUserLocation(userId, latlon);
+	}
+	
+	@RequestMapping("/getLastUserLocation/{userId}/{count}")
+	public Set<UserLocation> getLastUserLocation(@PathVariable Long userId, @PathVariable int count){
+		return userService.getLastUserLocation(userId, count);
+	}
 }

@@ -36,11 +36,9 @@ public class UserLocation {
     @JoinColumn(name = "user_id", nullable = false)
     private FBBUser user;
 	
-	public UserLocation(long id, double latitude, double longitude, Date timestamp) {
-		this.id = id;
+	public UserLocation(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.timestamp = timestamp;
 	}
 	
 	public UserLocation() {}

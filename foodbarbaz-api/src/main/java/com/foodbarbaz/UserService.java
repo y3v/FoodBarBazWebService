@@ -18,7 +18,7 @@ public class UserService {
 	//Connect to the database
 	@Autowired
 	private UserRepository userRepository;
-	
+	private UserLocationRepository userLocationRepository;
 	/*@Autowired
 	private FriendshipRepository friendshipRepository;*/
 	
@@ -61,19 +61,6 @@ public class UserService {
 		//get existing friends
 		Set<FBBUser> friends = user.getFriends();
 		
-		Iterator<FBBUser> it;
-		for(it= users.iterator(); it.hasNext();){
-		    FBBUser u = it.next();
-		    System.out.println("USER:::" + u.getId());
-		    for (FBBUser fbbUser : friends) {
-		    	System.out.println("FRIEND:::" + fbbUser.getId());
-				if (u.getId() == fbbUser.getId()) {
-					System.out.println("MATCH! REMOVE FROM LIST");
-					it.remove();
-				}
-			}
-		} 
-		
 		return users;
 	}
 	
@@ -113,6 +100,39 @@ public class UserService {
 		friends = user.getFriends();
 		
 		return friends;
+	}
+	
+	public void addUserLocation(Long userId, String location) {
+		System.out.println("" + userId + ", " + location);
+		if (location == null || location.isEmpty())
+			return;
+		
+		FBBUser user = userRepository.findOne(userId);
+		UserLocation userLocation;
+		
+		double lat, lon;
+		String[] latlon = location.split(":");
+		
+		lat = Double.parseDouble(latlon[0]);
+		lon = Double.parseDouble(latlon[1]);
+		
+		userLocation = new UserLocation(lat, lon);
+		userLocation.setUser(user);
+		
+		((CrudRepository<UserLocation, Long>) userLocationRepository).save(userLocation);
+	}
+	
+	public Set<UserLocation> getLastUserLocation(Long userId, int amount){
+		Set<UserLocation> locationSet = userRepository.findOne(userId).getUserLocations();
+		UserLocation[] locations = (UserLocation[]) locationSet.toArray();
+		locationSet.removeAll(locationSet);
+		
+		int count = amount > locations.length ? locations.length : amount;
+		
+		for (int i = 0; i < count; i++) 
+			locationSet.add(locations[i]);
+		
+		return locationSet;
 	}
 	
 }
