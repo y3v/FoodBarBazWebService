@@ -30,13 +30,13 @@ public class UserLocation {
 	
 	@NotNull
     @Temporal(TemporalType.TIMESTAMP)
-	private java.sql.Date timestamp;
+	private java.util.Date timestamp;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private FBBUser user;
 	
-	public UserLocation(double latitude, double longitude, java.sql.Date timestamp) {
+	public UserLocation(double latitude, double longitude, java.util.Date timestamp) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.timestamp = timestamp;
@@ -68,11 +68,11 @@ public class UserLocation {
 		this.longitude = longitude;
 	}
 
-	public java.sql.Date getTimestamp() {
+	public java.util.Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(java.sql.Date timestamp) {
+	public void setTimestamp(java.util.Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

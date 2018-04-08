@@ -17,6 +17,7 @@ public class UserService {
 	// Connect to the database
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
 	private UserLocationRepository userLocationRepository;
 	/*
 	 * @Autowired private FriendshipRepository friendshipRepository;
@@ -115,7 +116,7 @@ public class UserService {
 		lat = Double.parseDouble(latlon[0]);
 		lon = Double.parseDouble(latlon[1]);
 
-		userLocation = new UserLocation(lat, lon, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+		userLocation = new UserLocation(lat, lon, new java.util.Date(Calendar.getInstance().getTime().getTime()));
 		userLocation.setUser(user);
 
 		((CrudRepository<UserLocation, Long>) userLocationRepository).save(userLocation);
