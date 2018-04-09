@@ -62,6 +62,18 @@ public class UserService {
 		FBBUser user = userRepository.findOne(id);
 		// get existing friends
 		Set<FBBUser> friends = user.getFriends();
+		
+		Iterator<FBBUser> iter = users.iterator();
+
+		while (iter.hasNext()) {
+		    FBBUser u = iter.next();
+
+		    for (FBBUser fbbUser : friends) {
+				if (u.getId() == fbbUser.getId()) {
+					iter.remove();
+				}
+			}
+		}
 
 		return users;
 	}
