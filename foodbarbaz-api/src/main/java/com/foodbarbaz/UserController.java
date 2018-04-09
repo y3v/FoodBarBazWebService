@@ -22,9 +22,9 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
-	@RequestMapping("/getFollowing/{id}")
+	@RequestMapping("/getNotFollowing/{id}")
 	public List<FBBUser> getFollowing(@PathVariable Long id){
-		return userService.getAllFollowing(id);
+		return userService.getAllNotFollowing(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/register")
@@ -43,7 +43,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/getFriends/{id}")
-	public Set<FBBUser> getFriends(@PathVariable Long id){
+	public List<FBBUser> getFriends(@PathVariable Long id){
 		return userService.getAllFriends(id);
 	}
 	
@@ -57,10 +57,10 @@ public class UserController {
 		return userService.getLastUserLocation(userId, count);
 	}
 	
-	@RequestMapping("/getFriendsLocation/{userId}")
+	/*@RequestMapping("/getFriendsLocation/{userId}")
 	public List<UserLocation> getFriendsLocation(@PathVariable Long userId){
 		return userService.getFriendsLocation(userId);
-	}
+	}*/
 	
 	@RequestMapping("/deleteAllUserLocation/{userId}")
 	public void deleteAllUserLocation(@PathVariable long userId) {

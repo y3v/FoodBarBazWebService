@@ -53,7 +53,7 @@ public class UserService {
 		return null;
 	}
 
-	public List<FBBUser> getAllFollowing(Long id) {
+	public List<FBBUser> getAllNotFollowing(Long id) {
 		List<FBBUser> users = new ArrayList<>();
 
 		// get all users that are not the user asking
@@ -61,15 +61,15 @@ public class UserService {
 		// get the calling user
 		FBBUser user = userRepository.findOne(id);
 		// get existing friends
-		Set<FBBUser> friends = user.getFriends();
+		Set<Following> friends = user.getFriends();
 		
 		Iterator<FBBUser> iter = users.iterator();
 
 		while (iter.hasNext()) {
 		    FBBUser u = iter.next();
 
-		    for (FBBUser fbbUser : friends) {
-				if (u.getId() == fbbUser.getId()) {
+		    for (Following f : friends) {
+				if (u.getId() == f.getFriendId()) {
 					iter.remove();
 				}
 			}
@@ -79,38 +79,32 @@ public class UserService {
 	}
 
 	public void addFriendship(Long requesterId, Long friendId) {
-		FBBUser requester;
-		FBBUser friend;
+		FBBUser requester = userRepository.findOne(requesterId);
 
 		requester = userRepository.findOne(requesterId);
-		friend = userRepository.findOne(friendId);
+		
+		Following following = new Following();
+		following.setFollower(requester);
+		following.setFriendId(friendId);
 
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
-		requester.getFriends().add(friend);
-
-		for (FBBUser f : requester.getFriends()) {
-			System.out.println(f.getId() + " " + f.getFirstname());
-			System.out.println(f.getId() + " " + f.getFirstname());
-		}
-
-		System.out.println("PRE-REQUESTER ID:" + requesterId);
-		System.out.println("PRE-FRIEND ID:" + friendId);
-		System.out.println("DATE:" + date);
-
-		System.out.println("REQUESTER ID:" + requester.getId() + " NAME: " + requester.getFirstname());
-		System.out.println("FRIEND ID:" + friend.getId() + " NAME: " + friend.getFirstname());
-
+		requester.getFriends().add(following);
+		
 		// ((CrudRepository<Friendship, Long>) friendshipRepository).save(fs);
 		((CrudRepository<FBBUser, Long>) userRepository).save(requester);
 	}
 
-	public Set<FBBUser> getAllFriends(Long id) {
-		Set<FBBUser> friends = new HashSet<FBBUser>();
+	public List<FBBUser> getAllFriends(Long id) {
+		List<FBBUser> friends = new ArrayList<FBBUser>();
+		FBBUser requester = userRepository.findOne(id);
 
-		FBBUser user = userRepository.findOne(id);
-
-		friends = user.getFriends();
+		Set<Following> rawList = requester.getFriends();
+		
+		for (Following following : rawList) {
+			System.out.println("Friend ID: " + following.getFriendId());
+			friends.add(userRepository.findOne(following.getFriendId()));
+		}
 
 		return friends;
 	}
@@ -142,7 +136,7 @@ public class UserService {
 		return locationSet;
 	}
 	
-	public List<UserLocation> getFriendsLocation(Long userId){
+	/*public List<UserLocation> getFriendsLocation(Long userId){
 		List<UserLocation> friendsLocation = new ArrayList<>();
 		Set<FBBUser> friends = userRepository.findOne(userId).getFriends();
 		
@@ -151,7 +145,7 @@ public class UserService {
 		}
 		
 		return friendsLocation;
-	}
+	}*/
 	
 	public void deleteAllUserLocation(Long userId) {
 		FBBUser user = userRepository.findOne(userId);

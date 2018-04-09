@@ -2,7 +2,6 @@ package com.foodbarbaz;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,18 +19,14 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity //mark this class as an entity
-@Table(name = "user_location")
-public class UserLocation implements Serializable{
+@Table(name = "following")
+public class Following implements Serializable {
+
 	@Id @GeneratedValue
 	@Column(name = "id", updatable = false, nullable = false)
 	private long id;
-	
-	private double latitude;
-	
-	private double longitude;
 	
 	@NotNull
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,18 +35,12 @@ public class UserLocation implements Serializable{
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
-    private FBBUser user;
+    private FBBUser follower;
 	
-	/*public UserLocation(double latitude, double longitude, FBBUser user) {
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.timestamp = new java.util.Date(Calendar.getInstance().getTime().getTime());
-		if (user != null)
-			this.user = user;
-	}*/
+	private long friendId;
 	
-	public UserLocation() {
-		this.timestamp = new java.util.Date(Calendar.getInstance().getTime().getTime());
+	public Following() {
+		this.timestamp = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 	}
 
 	public long getId() {
@@ -62,20 +51,12 @@ public class UserLocation implements Serializable{
 		this.id = id;
 	}
 
-	public double getLatitude() {
-		return latitude;
+	public long getFriendId() {
+		return friendId;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setFriendId(long friendId) {
+		this.friendId = friendId;
 	}
 
 	public java.util.Date getTimestamp() {
@@ -86,14 +67,12 @@ public class UserLocation implements Serializable{
 		this.timestamp = timestamp;
 	}
 
-	public FBBUser getUser() {
-		return user;
+	public FBBUser getFollower() {
+		return follower;
 	}
 
-	public void setUser(FBBUser user) {
-		this.user = user;
+	public void setFollower(FBBUser follower) {
+		this.follower = follower;
 	}
 	
-	
-		
 }

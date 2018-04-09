@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 public class UserLocationController {
 
-	@Autowired
+	/*@Autowired
 	UserLocationService userLocationService;
 	
 	@RequestMapping(method=RequestMethod.POST, value="/addUserLocation")
@@ -20,5 +20,5 @@ public class UserLocationController {
 	@RequestMapping("/getUserLocation")
 	public List<UserLocation> getAllFriendships(){
 		return userLocationService.getAllUserLocations();
-	}
+	}*/
 }

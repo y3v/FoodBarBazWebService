@@ -30,11 +30,16 @@ public class FBBUser implements Serializable{
 	private String lastname;
 	private String email;
 
-	@ManyToMany(cascade={CascadeType.ALL})
+	/*@ManyToMany(cascade={CascadeType.ALL})
     @JoinTable(name="EMPLOYEE_COLLEAGUE",
         joinColumns={@JoinColumn(name="FRIEND1_ID")},
-        inverseJoinColumns={@JoinColumn(name="FRIEND2_ID")})
-    private Set<FBBUser> friends = new HashSet<FBBUser>();
+        inverseJoinColumns={@JoinColumn(name="FRIEND2_ID")})*/
+	
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "follower", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<Following> friends = new HashSet<Following>();
 	
 
 	@JsonManagedReference
@@ -105,11 +110,11 @@ public class FBBUser implements Serializable{
 	}
 
 
-	public Set<FBBUser> getFriends() {
+	public Set<Following> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(Set<FBBUser> friends) {
+	public void setFriends(Set<Following> friends) {
 		this.friends = friends;
 	}
 
@@ -121,14 +126,14 @@ public class FBBUser implements Serializable{
 		this.userLocations = userLocations;
 	}
 	
-	public UserLocation getLastKnownLocation() {
+	/*public UserLocation getLastKnownLocation() {
 		UserLocation[] locations = (UserLocation[]) getUserLocations().toArray();
 		
 		if (locations.length > 0) 
 			return (UserLocation) locations[0];
 		else
 			return null;
-	}
+	}*/
 	
 	
 	
