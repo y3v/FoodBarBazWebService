@@ -1,6 +1,7 @@
 package com.foodbarbaz;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -40,13 +41,17 @@ public class UserLocation implements Serializable{
     @JoinColumn(name = "user_id", nullable = false)
     private FBBUser user;
 	
-	public UserLocation(double latitude, double longitude, java.util.Date timestamp) {
+	public UserLocation(double latitude, double longitude, FBBUser user) {
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.timestamp = timestamp;
+		this.timestamp = new java.util.Date(Calendar.getInstance().getTime().getTime());
+		if (user != null)
+			this.user = user;
 	}
 	
-	public UserLocation() {}
+	public UserLocation() {
+		this.timestamp = new java.util.Date(Calendar.getInstance().getTime().getTime());
+	}
 
 	public long getId() {
 		return id;

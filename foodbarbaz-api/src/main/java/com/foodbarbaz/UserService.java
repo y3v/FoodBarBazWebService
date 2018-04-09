@@ -102,26 +102,15 @@ public class UserService {
 		return friends;
 	}
 
-	public void addUserLocation(Long userId, String location) {
-		FBBUser user = userRepository.findOne(userId);
-		System.out.println("" + userId + ", " + location);
-		if (location == null || location.isEmpty())
+	public void addUserLocation(UserLocation userLocation) {
+		if (userLocation == null)
 			return;
-		
-		double lat, lon;
-		String[] latlon = location.split(":");
 
-		lat = Double.parseDouble(latlon[0]);
-		lon = Double.parseDouble(latlon[1]);
-
-		UserLocation userLocation = new UserLocation(lat, lon, new java.util.Date(Calendar.getInstance().getTime().getTime()));
-		userLocation.setUser(user);
-		
-		System.out.println("user's location size: " + user.getUserLocations().size());
+		FBBUser user = userRepository.findOne(userLocation.getUser().getId());
 		user.getUserLocations().add(userLocation);
+		userLocation.setUser(user);
 
 		((CrudRepository<FBBUser, Long>) userRepository).save(user);
-		((CrudRepository<UserLocation, Long>) userLocationRepository).save(userLocation);
 	}
 
 	public Set<UserLocation> getLastUserLocation(Long userId, int amount) {
@@ -138,6 +127,17 @@ public class UserService {
 		}
 		System.out.println("locations count " + locations.length);
 		return locationSet;
+	}
+	
+	public List<UserLocation> getFriendsLocation(Long userId){
+		List<UserLocation> friendsLocation = new ArrayList<>();
+		Set<FBBUser> friends = userRepository.findOne(userId).getFriends();
+		
+		for (FBBUser user : friends) {
+			friendsLocation.add(user.getLastKnownLocation());
+		}
+		
+		return friendsLocation;
 	}
 	
 	public void deleteAllUserLocation(Long userId) {
