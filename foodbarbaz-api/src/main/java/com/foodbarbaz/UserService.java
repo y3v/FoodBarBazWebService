@@ -20,12 +20,16 @@ public class UserService {
 
 	@Autowired
 	private UserLocationRepository userLocationRepository;
+	
+	@Autowired
+	private FollowingRepository followingRepository;
 	/*
 	 * @Autowired private FriendshipRepository friendshipRepository;
 	 */
 
 	// Get all users from the database - WORKS
 	public List<FBBUser> getAllUsers() {
+		System.out.println("GETTING ALL USERS");
 		List<FBBUser> users = new ArrayList<>();
 		users = (List<FBBUser>) ((CrudRepository<FBBUser, Long>) userRepository).findAll();
 
@@ -93,6 +97,40 @@ public class UserService {
 		
 		// ((CrudRepository<Friendship, Long>) friendshipRepository).save(fs);
 		((CrudRepository<FBBUser, Long>) userRepository).save(requester);
+	}
+	
+	public void removeFriendship(Long requesterId, Long friendId) {
+		System.out.println("REMOVING USER");
+		FBBUser requester = userRepository.findOne(requesterId);
+		System.out.println("REQUESTER:: " + requester.getFirstname() + " " + requester.getId());
+
+		requester = userRepository.findOne(requesterId);
+		
+		Set<Following> following = requester.getFriends();
+		for (Following fl : following) {
+			System.out.println("FRIEND:: " + fl.getFriendId());
+			System.out.println("VS:: " + friendId);
+		}
+		
+		Iterator<Following> iter = following.iterator();
+		while (iter.hasNext()) {
+		    Following f = iter.next();
+		    System.out.println("Following f::: " + f.getFriendId());
+		    if (f.getFriendId() == friendId) {
+		    	System.out.println("MATCH::: REMOVING FRIENDSHIP ::::");
+		    	iter.remove();
+		    }
+		}
+		
+		for (Following following2 : following) {
+			System.out.println("AFTER REMOVAL:" + following2.getFriendId());
+		}
+
+		requester.setFriends(following);
+		
+		// ((CrudRepository<Friendship, Long>) friendshipRepository).save(fs);
+		((CrudRepository<FBBUser, Long>) userRepository).save(requester);
+		
 	}
 
 	public List<FBBUser> getAllFriends(Long id) {

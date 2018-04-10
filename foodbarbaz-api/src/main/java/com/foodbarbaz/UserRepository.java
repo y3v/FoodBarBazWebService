@@ -11,5 +11,6 @@ public interface UserRepository extends CrudRepository<FBBUser, Long> {
 	
 	List<FBBUser> findAllByIdNotLike(@Param("id") Long id);
 	
+	
 }
 

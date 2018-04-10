@@ -37,7 +37,7 @@ public class FBBUser implements Serializable{
 	
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "follower", cascade = CascadeType.ALL,
+	@OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true,
             fetch = FetchType.LAZY)
     private Set<Following> friends = new HashSet<Following>();
 	

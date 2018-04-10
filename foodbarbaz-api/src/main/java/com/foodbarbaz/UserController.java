@@ -42,6 +42,11 @@ public class UserController {
 		userService.addFriendship(idReq,idFriend);
 	}
 	
+	@RequestMapping("/removeFriendship/{idReq}/{idFriend}")
+	public void removeFriendship(@PathVariable Long idReq, @PathVariable Long idFriend){
+		userService.removeFriendship(idReq,idFriend);
+	}
+	
 	@RequestMapping("/getFriends/{id}")
 	public List<FBBUser> getFriends(@PathVariable Long id){
 		return userService.getAllFriends(id);

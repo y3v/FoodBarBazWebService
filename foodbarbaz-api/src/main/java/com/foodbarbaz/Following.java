@@ -33,7 +33,7 @@ public class Following implements Serializable {
 	private java.util.Date timestamp;
 	
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade= CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
     private FBBUser follower;
 	
