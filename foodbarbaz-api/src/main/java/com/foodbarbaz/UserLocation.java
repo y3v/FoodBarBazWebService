@@ -42,13 +42,13 @@ public class UserLocation implements Serializable{
     @JoinColumn(name = "user_id", nullable = false)
     private FBBUser user;
 	
-	/*public UserLocation(double latitude, double longitude, FBBUser user) {
+	public UserLocation(double latitude, double longitude, FBBUser user) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.timestamp = new java.util.Date(Calendar.getInstance().getTime().getTime());
 		if (user != null)
 			this.user = user;
-	}*/
+	}
 	
 	public UserLocation() {
 		this.timestamp = new java.util.Date(Calendar.getInstance().getTime().getTime());
