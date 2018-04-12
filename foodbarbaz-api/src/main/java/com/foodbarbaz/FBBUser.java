@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
@@ -29,11 +31,7 @@ public class FBBUser implements Serializable{
 	private String firstname;
 	private String lastname;
 	private String email;
-
-	/*@ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="EMPLOYEE_COLLEAGUE",
-        joinColumns={@JoinColumn(name="FRIEND1_ID")},
-        inverseJoinColumns={@JoinColumn(name="FRIEND2_ID")})*/
+	private String photo;
 	
 	
 	@JsonManagedReference
@@ -125,6 +123,15 @@ public class FBBUser implements Serializable{
 	public void setUserLocations(Set<UserLocation> userLocations) {
 		this.userLocations = userLocations;
 	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
 	
 	/*public UserLocation getLastKnownLocation() {
 		UserLocation[] locations = (UserLocation[]) getUserLocations().toArray();

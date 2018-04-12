@@ -189,5 +189,24 @@ public class UserService {
 		FBBUser user = userRepository.findOne(userId);
 		((CrudRepository<UserLocation, Long>) userLocationRepository).delete(user.getUserLocations());
 	}
+	
+	public void addProfilePic(PhotoHolder photo) {
+		FBBUser user = userRepository.findOne(photo.getId());
+		user.setPhoto(photo.getPhoto());
+		
+		((CrudRepository<FBBUser, Long>) userRepository).save(user);
+	}
+	
+	public String getPhoto(Long id) {
+		FBBUser user = userRepository.findOne(id);
+		
+		return user.getPhoto();
+	}
+	
+	public FBBUser getUser(Long id) {
+		FBBUser user = userRepository.findOne(id);
+		
+		return user;
+	}
 
 }
