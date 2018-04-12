@@ -76,4 +76,19 @@ public class UserController {
 	public void deleteAllUserLocation(@PathVariable long userId) {
 		userService.deleteAllUserLocation(userId);
 	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/addProfilePic")
+	public void addProfilePic(@RequestBody PhotoHolder photo) {
+		userService.addProfilePic(photo);
+	}
+	
+	@RequestMapping("/getPhoto/{id}")
+	public String getPhoto(@PathVariable Long id){
+		return userService.getPhoto(id);
+	}
+	
+	@RequestMapping("/getUser/{id}")
+	public FBBUser getUser(@PathVariable Long id){
+		return userService.getUser(id);
+	}
 }
