@@ -124,17 +124,5 @@ public class FBBUser implements Serializable{
 
 	public void setUserLocations(Set<UserLocation> userLocations) {
 		this.userLocations = userLocations;
-	}
-	
-	/*public UserLocation getLastKnownLocation() {
-		UserLocation[] locations = (UserLocation[]) getUserLocations().toArray();
-		
-		if (locations.length > 0) 
-			return (UserLocation) locations[0];
-		else
-			return null;
-	}*/
-	
-	
-	
+	}	
 }

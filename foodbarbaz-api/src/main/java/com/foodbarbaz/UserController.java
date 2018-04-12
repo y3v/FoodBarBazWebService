@@ -62,10 +62,15 @@ public class UserController {
 		return userService.getLastUserLocation(userId, count);
 	}
 	
-	/*@RequestMapping("/getFriendsLocation/{userId}")
+	@RequestMapping("/getFriendsLocation/{userId}")
 	public List<UserLocation> getFriendsLocation(@PathVariable Long userId){
 		return userService.getFriendsLocation(userId);
-	}*/
+	}
+	
+	@RequestMapping("/getFriendLocation/{userId}")
+	public UserLocation getFriendLocation(@PathVariable Long userId){
+		return userService.getFriendLocation(userId);
+	}
 	
 	@RequestMapping("/deleteAllUserLocation/{userId}")
 	public void deleteAllUserLocation(@PathVariable long userId) {

@@ -174,16 +174,37 @@ public class UserService {
 		return locationSet;
 	}
 	
-	/*public List<UserLocation> getFriendsLocation(Long userId){
+	public List<UserLocation> getFriendsLocation(Long userId){
 		List<UserLocation> friendsLocation = new ArrayList<>();
-		Set<FBBUser> friends = userRepository.findOne(userId).getFriends();
+		Set<Following> followers = userRepository.findOne(userId).getFriends();
 		
-		for (FBBUser user : friends) {
-			friendsLocation.add(user.getLastKnownLocation());
+		for (Following follower : followers) {
+			UserLocation[] locations = (UserLocation[]) follower.getFollower().getUserLocations().toArray();
+			
+			if (locations.length > 0) 
+				friendsLocation.add((UserLocation) locations[0]);
 		}
 		
 		return friendsLocation;
-	}*/
+	}
+	
+	public UserLocation getFriendLocation(Long userId) {
+		FBBUser user = userRepository.findOne(userId);
+		Set<UserLocation> locs = user.getUserLocations();
+		
+		for (UserLocation userLocation : locs) {
+			System.out.println(userLocation.getLatitude());
+		}
+		Object[] locations = locs.toArray();
+		
+		if (locations != null && locations.length > 0) {
+			Object lastKnownLocation = locations[0];
+			UserLocation location = (UserLocation) lastKnownLocation;
+			return location;
+		}
+		else
+			return null;
+	}
 	
 	public void deleteAllUserLocation(Long userId) {
 		FBBUser user = userRepository.findOne(userId);
