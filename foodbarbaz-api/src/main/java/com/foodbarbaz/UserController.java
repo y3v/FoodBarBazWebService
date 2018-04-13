@@ -28,8 +28,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/register")
-	public void registerUser(@RequestBody FBBUser user){
-		userService.addUser(user);
+	public String registerUser(@RequestBody FBBUser user){
+		return userService.addUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/login")

@@ -37,8 +37,9 @@ public class UserService {
 	}
 
 	// Add user - WORKS
-	public void addUser(FBBUser user) {
-		((CrudRepository<FBBUser, Long>) userRepository).save(user);
+	public String addUser(FBBUser user) {
+		FBBUser savedUser = ((CrudRepository<FBBUser, Long>) userRepository).save(user);
+		return "" + savedUser.getId();
 	}
 
 	// Get one user and return it
