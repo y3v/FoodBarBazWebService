@@ -232,7 +232,12 @@ public class UserService {
 	}
 	
 	public void editUser(FBBUser user) {
-		((CrudRepository<FBBUser, Long>) userRepository).save(user);
+		FBBUser temp = userRepository.findOne(user.getId());
+		temp.setFirstname(user.getFirstname());
+		temp.setLastname(user.getLastname());
+		temp.setEmail(user.getEmail());
+		temp.setPhoto(user.getPhoto());
+		((CrudRepository<FBBUser, Long>) userRepository).save(temp);
 	}
 
 }
