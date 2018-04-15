@@ -91,4 +91,10 @@ public class UserController {
 	public FBBUser getUser(@PathVariable Long id){
 		return userService.getUser(id);
 	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/edit")
+	public void editUser(@RequestBody FBBUser user){
+		userService.editUser(user);
+	}
+	
 }

@@ -230,5 +230,9 @@ public class UserService {
 		
 		return user;
 	}
+	
+	public void editUser(FBBUser user) {
+		((CrudRepository<FBBUser, Long>) userRepository).save(user);
+	}
 
 }
