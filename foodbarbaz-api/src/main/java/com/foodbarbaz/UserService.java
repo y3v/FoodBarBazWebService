@@ -236,7 +236,6 @@ public class UserService {
 		temp.setFirstname(user.getFirstname());
 		temp.setLastname(user.getLastname());
 		temp.setEmail(user.getEmail());
-		temp.setPhoto(user.getPhoto());
 		((CrudRepository<FBBUser, Long>) userRepository).save(temp);
 	}
 
